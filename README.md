@@ -7,8 +7,10 @@ Deep Sign Recognition is a desktop application for automated sign language capti
 <img src="/Images/architecture.png" width="640" />
 
 ## RUN
-
+Download and install Anaconda python using this link : https://www.anaconda.com/products/individual
 ```sh
+conda create -n deepsr pip python=3.7
+conda activate deepsr
 pip install -r requirements.txt
 python DeepSR.py
 ```
