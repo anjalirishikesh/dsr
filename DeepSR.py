@@ -10,7 +10,6 @@ from moviepy.video.io.VideoFileClip import VideoFileClip
 from moviepy.audio.io.AudioFileClip import AudioFileClip
 from moviepy.audio.AudioClip import CompositeAudioClip
 import subprocess
-import pandas as pd
 from typing import Tuple
 import vidViewer
 from PyQt5.QtGui import QIcon, QFont
@@ -137,9 +136,10 @@ class model_loader(QtCore.QThread):
                 # Remove the frame with zero clip
                 if value !=0 and value == 64:
                     perc = frame_counter / val1
-                    perc = perc*100
-                    frame_counter +=1
-                    self.report.emit(perc)
+                    if frame_counter < val1:
+                        perc = perc*100
+                        frame_counter +=1
+                        self.report.emit(perc)
                    
                     #print(res.shape)
                     model_input = tf.constant(res, dtype=tf.float32)[tf.newaxis, ...]
@@ -186,6 +186,11 @@ class model_loader(QtCore.QThread):
 
 
                     cv2.putText(frame_new, str(word_topk),(30,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),2,cv2.LINE_AA)
+                if frame_counter == val1:
+                    cap.release()
+                    perc = 100
+                    self.report.emit(perc)
+
                     
                     
                     
@@ -975,7 +980,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.statusBar_Bottom.showMessage('Video saving at : ' + self.filename_new)
         videoclip = VideoFileClip(self.filename)
         print(self.filename)
-        shutil.copy2("out.avi",self.filename_new)
+        shutil.copy2("output.mp4",self.filename_new)
         self.statusBar_Bottom.showMessage('Video saved ')
     def open_video_file(self, file: str) -> bool:
         try:
@@ -993,11 +998,11 @@ class MainWindow(QtWidgets.QMainWindow):
     def model_run(self, val):  
         self.statusBar_Bottom.showMessage(' DSR started : ' + "{}%".format(str(int(val))))
         if int(val) == 100:
-            time.sleep(2)
+            time.sleep(5)
             self.statusBar_Bottom.showMessage(' DSR completed : ' + "{}%".format(str(int(val))))
             file = open("file2.txt","w")
             self.save_video.setEnabled(True)
-            self.open_video_file("out.avi")
+            self.open_video_file("output.mp4")
 
     @QtCore.pyqtSlot(int, float, object)
     def on_vid_metadata_change(self, length: int, fps: int, resolution: Tuple[int, int]):
