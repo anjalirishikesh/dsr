@@ -1,0 +1,6 @@
+opencv-python
+pillow
+moviepy
+PyQT5
+tf-nightly
+
