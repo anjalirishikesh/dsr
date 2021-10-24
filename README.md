@@ -6,7 +6,7 @@ Deep Sign Recognition is a desktop application for automated sign language capti
 
 <img src="/Images/architecture.png" width="640" />
 
-## installation
+## RUN
 
 ```sh
 pip install -r requirements.txt
