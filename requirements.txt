@@ -3,4 +3,6 @@ pillow
 moviepy
 PyQT5
 tf-nightly
+ffmpeg-python
+ffmpeg
 
