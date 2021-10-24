@@ -22,5 +22,5 @@ python DeepSR.py
 1. https://github.com/dxli94/WLASL
 2. https://github.com/onnx/onnx-tensorflow
 3. https://www.tensorflow.org/lite/guide/ops_custom
-4. 
+
 
